@@ -1,166 +1,161 @@
 package task.three;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskThreeTest {
 
-    private int inputRoots = 0;
-
-    private int toInputSize = 0;
-
-    private TaskThree task = new TaskThree();
+    TaskThree task = new TaskThree();
 
     @Test
-    void processInputOne() {
-
-        List<Pair> inputListOne = createInputListOne();
-
-//        for (Pair p: inputListOne) {
-//            System.out.println(p.toString());
-//        }
-
-        int roots = task.processInput(inputListOne);
-        assertEquals(inputRoots, roots);
+    void fechRoots_1() {
+        List<Pair> pairs = prepareData_1();
+        int roots = task.fechRoots(pairs);
+        assertEquals(2, roots);
     }
 
     @Test
-    void processInputListTwo() {
-
-        List<Pair> inputListTwo = createInputListWithDuplicates();
-
-        for (Pair p: inputListTwo) {
-            System.out.println(p.toString());
-        }
-
-        int roots = task.processInput(inputListTwo);
-        assertEquals(inputRoots, roots);
+    void fechRoots_2() {
+        List<Pair> pairs = prepareData_2();
+        int roots = task.fechRoots(pairs);
+        assertEquals(2, roots);
     }
 
-    private List<Pair> createInputListWithDuplicates() {
-
-        List<Pair> inputListOne = new ArrayList<>();
-
-        int toInput = 100;
-        inputListOne.add(new Pair(toInput, 0));
-        toInputSize++;
-
-        Pair p = null;
-        for(int i = 0; i < toInput; i++) {
-            p = new Pair(toInput - i, toInput - i -1);
-            inputListOne.add(p);
-            toInputSize++;
-        }
-
-        inputListOne.add(p);
-        toInputSize++;
-        inputListOne.add(p);
-        toInputSize++;
-        inputListOne.add(p);
-        toInputSize++;
-
-        inputRoots++;
-
-        for(int i = 0; i < 10; i++) {
-            p = new Pair(1000 - i, 1000 - i -1);
-            inputListOne.add(p);
-            toInputSize++;
-        }
-        inputRoots++;
-
-
-        for(int i = 0; i < 10; i++) {
-            p = new Pair(2000 - i, 2000 - i -1);
-            inputListOne.add(p);
-            toInputSize++;
-        }
-
-
-        inputRoots++;
-
-        for(int i = 0; i < 10; i++) {
-            p = new Pair(3000 - i, 3000 - i -1);
-            inputListOne.add(p);
-            toInputSize++;
-        }
-
-        inputListOne.add(p);
-        toInputSize++;
-        inputListOne.add(p);
-        toInputSize++;
-        inputListOne.add(p);
-        toInputSize++;
-
-        inputRoots++;
-
-        inputListOne.get(0).setA(--toInputSize);       // first position only length
-
-        return inputListOne;
+    @Test
+    void fechRoots_3() {
+        List<Pair> pairs = prepareData_3();
+        int roots = task.fechRoots(pairs);
+        assertEquals(1, roots);
     }
 
-    private List<Pair> createInputListOne() {
-
-        List<Pair> inputList = new ArrayList<>();
-
-        int toInput = 100;
-        inputList.add(new Pair(toInput, 0));
-        toInputSize++;
-
-        Pair p = null;
-        for(int i = 0; i < toInput; i++) {
-            p = new Pair(toInput - i, toInput - i -1);
-            inputList.add(p);
-            toInputSize++;
-        }
-
-        inputRoots++;
-
-        for(int i = 0; i < 10; i++) {
-            p = new Pair(1000 - i, 1000 - i -1);
-            inputList.add(p);
-            toInputSize++;
-        }
-        inputRoots++;
-
-
-        for(int i = 0; i < 10; i++) {
-            p = new Pair(2000 - i, 2000 - i -1);
-            inputList.add(p);
-            toInputSize++;
-        }
-
-
-        inputRoots++;
-
-        for(int i = 0; i < 10; i++) {
-            p = new Pair(3000 - i, 3000 - i -1);
-            inputList.add(p);
-            toInputSize++;
-        }
-        inputRoots++;
-
-        inputList.get(0).setA(--toInputSize);       // first position only length
-
-        return inputList;
+    @Test
+    void fechRoots_4() {
+        List<Pair> pairs = prepareData_4();
+        int roots = task.fechRoots(pairs);
+        assertEquals(3, roots);
     }
 
+    @Test
+    void fechRoots_5() {
+        List<Pair> pairs = prepareData_5();
+        int roots = task.fechRoots(pairs);
+        assertEquals(3, roots);
+    }
 
-    @BeforeEach
-    void setUp() {
+    @Test
+    void fechRoots_6() {
+        List<Pair> pairs = prepareData_6();
+        int roots = task.fechRoots(pairs);
+        assertEquals(3, roots);
+    }
 
+    private List<Pair> prepareData_6() {
 
+        List<Pair> list = new ArrayList<>();
+        list.add(new Pair(3, 0));
+
+        list.add(new Pair(9, 10));
+
+        list.add(new Pair(1000, 2000));
+
+        list.add(new Pair(1500, 3000));
+
+        list.add(new Pair(100001, 1500));
+
+        list.add(new Pair(100001, 33));
+
+        list.get(0).setA(list.size()-1);
+        return list;
+    }
+
+    private List<Pair> prepareData_4() {
+
+        List<Pair> list = new ArrayList<>();
+        list.add(new Pair(10, 0));
+
+        list.add(new Pair(1, 2));
+        list.add(new Pair(9, 10));
+        list.add(new Pair(18,19));
+        list.add(new Pair(2, 10));
+        list.add(new Pair(33, 34));
+        list.add(new Pair(101, 102));
+        list.add(new Pair(101, 102));
+        list.add(new Pair(101, 102));
+        list.add(new Pair(34, 52));
+        list.add(new Pair(22, 34));
+        list.add(new Pair(201, 102));
+        list.add(new Pair(101, 22));
+        list.add(new Pair(2, 55));
+
+        list.get(0).setA(list.size()-1);
+
+        return list;
+    }
+
+    private List<Pair> prepareData_3() {
+
+        List<Pair> list = new ArrayList<>();
+        list.add(new Pair(3, 0));
+
+        list.add(new Pair(1, 2));
+        list.add(new Pair(2, 3));
+        list.add(new Pair(4,5));
+        list.add(new Pair(3,4));
+        list.get(0).setA(list.size()-1);
+        return list;
+    }
+
+    private List<Pair> prepareData_2() {
+
+        List<Pair> list = new ArrayList<>();
+        list.add(new Pair(1, 0));
+
+        list.add(new Pair(1, 2));
+        list.add(new Pair(2, 3));
+        list.add(new Pair(4,5));
+        list.get(0).setA(list.size()-1);
+        return list;
+    }
+
+    private List<Pair> prepareData_1() {
+
+        List<Pair> list = new ArrayList<>();
+        list.add(new Pair(3, 0));
+
+        list.add(new Pair(4, 3));
+        list.add(new Pair(1, 4));
+        list.add(new Pair(5,6));
+        list.get(0).setA(list.size()-1);
+        return list;
     }
 
 
 
-    @AfterEach
-    void tearDown() {
+
+    private List<Pair> prepareData_5() {
+
+        List<Pair> list = new ArrayList<>();
+
+        list.add(new Pair(10, 0));
+        list.add(new Pair(1, 2));
+        list.add(new Pair(9, 10));
+        list.add(new Pair(18,19));
+        list.add(new Pair(2, 10));
+        list.add(new Pair(33, 34));
+        list.add(new Pair(101, 102));
+        list.add(new Pair(101, 102));
+        list.add(new Pair(101, 102));
+        list.add(new Pair(34, 52));
+        list.add(new Pair(22, 34));
+        list.add(new Pair(201, 102));
+        list.add(new Pair(101, 22));
+        list.add(new Pair(2, 55));
+
+        list.get(0).setA(list.size()-1);
+        return list;
     }
 
 

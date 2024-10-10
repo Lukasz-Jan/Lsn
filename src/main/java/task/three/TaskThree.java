@@ -1,81 +1,110 @@
 package task.three;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class TaskThree {
-
-    private int roots = 0;
-
-    private List<Pair> pairList;
-
-    protected int processInput(List<Pair> list) {
-
-        if (list == null || list.size() < 2) return 0;
-
-        int size = list.get(0).a;
-
-        pairList = new ArrayList<>(size);
-        pairList.addAll(list.subList(1, size + 1));
-
-        sortInPair(pairList);
-
-        pairList = pairList.stream().parallel().sorted(new PairComparator()).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-
-        System.out.println("\nResult  list:");
-        for(Pair p : pairList) {
-            System.out.println(p.toString());
-        }
+public final class TaskThree {
 
 
-        searchRoots(pairList);
+    private final Map<Integer, Set<Integer>> connections = new HashMap<>(10_000);
 
-        return roots;
+
+    protected int fechRoots(List<Pair> pairList) {
+
+        if (pairList == null || pairList.isEmpty()) throw new IllegalArgumentException();
+
+        fillMapWithConnections(pairList);
+
+        int i = processRoots();
+        System.out.println(i);
+        return i;
     }
 
-    private void searchRoots(List<Pair> pairList) {
+    private int processRoots()  {
 
-        if(pairList == null || pairList.size() == 0) throw new IllegalArgumentException();
+        int no = 0;
 
-        int lastIdx = pairList.size() - 1;
+        Deque<Integer> qu = new ArrayDeque<>(100);
 
-        Pair lastPair = pairList.get(lastIdx);
+        Set<Integer> connectionKeys = null;
 
-        if (lastPair != null) {
-            roots++;
+        while(!connections.isEmpty()) {
+            connectionKeys = connections.keySet();
+
+            if (!connectionKeys.isEmpty()) {
+
+                Integer root = connectionKeys.iterator().next();
+                addVerticesToQueue(qu, connections.get(root));
+                connections.remove(root);
+
+                while (!qu.isEmpty()) {
+
+                    Integer currentVtx = qu.pop();
+                    Set<Integer> vertices = connections.get(currentVtx);
+                    if (vertices != null) {
+                        addVerticesToQueue(qu, vertices);
+                    }
+                    connections.remove(currentVtx);
+                }
+                no++;
+            }
         }
 
-        while (lastIdx > -1) {
+        return no;
+    }
 
-            int lastA = lastPair.getA();
-            lastIdx--;
-            if (lastIdx > 0) {
+    private void  addVerticesToQueue(Deque<Integer> qu, Set<Integer> vertices) {
 
-                     //Pair lastButOnePair = pairList.get(lastIdx);
-                    //int lastButOneA = lastButOnePair.getA();
-                    int lastButOneA = pairList.get(lastIdx).getA();
+        for(Integer vtx: vertices) {
 
-                    if (lastA == lastButOneA) {
-                        lastPair = pairList.get(lastIdx);
-                        continue;
-                    }
-
-                    if (lastA != ++lastButOneA) {
-                        roots++;
-                    }
-                    lastPair = pairList.get(lastIdx);
+            if(connections.containsKey(vtx)){
+                qu.add(vtx);
             }
         }
     }
 
-    private void sortInPair(List<Pair> pairs) {
 
-        for (Pair p : pairs) {
-            if (p.a > p.b) {
-                int temp = p.a;
-                p.a = p.b;
-                p.b = temp;
-            }
+    private void fillMapWithConnections(List<Pair> pairList) {
+
+        int size = pairList.size();
+
+        for (int i = 1; i < pairList.size(); i++) {
+            Pair p = pairList.get(i);
+            addPairToConnections(p);
         }
+    }
+
+    private void addPairToConnections(Pair p) {
+
+        int a = p.getA();
+        int b = p.getB();
+        Set<Integer> setA = connections.get(a);
+
+        if(setA == null) {
+            setA = new HashSet<>();
+            connections.put(a, setA);
+        }
+        setA.add(b);
+
+        Set<Integer> setB = connections.get(b);
+        if(setB == null) {
+            setB = new HashSet<>();
+            connections.put(b, setB);
+        }
+        setB.add(a);
+    }
+
+
+    private void displayConnections() {
+
+        Set<Map.Entry<Integer, Set<Integer>>> entries = connections.entrySet();
+
+        for(    Map.Entry<Integer, Set<Integer>> en: entries)  {
+
+            System.out.println(en.getKey() + ":   " + en.getValue());
+        }
+    }
+
+    public Map<Integer, Set<Integer>> getConnections() {
+        return Map.copyOf(connections);
     }
 }

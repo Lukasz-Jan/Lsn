@@ -2,9 +2,9 @@ package task.three;
 
 public class Pair {
 
-    int a;
+    private int a;
 
-    int b;
+    private int b;
 
     public Pair(int a, int b) {
         this.a = a;
@@ -27,4 +27,6 @@ public class Pair {
     public int getA() {
         return a;
     }
+
+    public int getB() { return b; }
 }
