@@ -1,0 +1,22 @@
+
+
+
+Rozwiązania dostarczone w pakietach
+wg kolejności zadań odpowiednio:
+
+* task.one - pierwsze zadanie
+* task.two - drugie zadanie
+* task.three - trzecie zadanie
+
+<<<<<<< HEAD
+## Uruchmienie testów . 
+Testy do każdego zadania odpowiednio w pakietach wg nazwnictwa pakietów.
+Wchodzimy w klasę testową i uruchamiamy test @Test
+=======
+## Uruchmienie programów. 
+Testy do każdego zadania odpowiednio w pakietach wg nazwnictwa pakietów.
+Wchodzimy w klasę testową i uruchamiamy test @Test.
+>>>>>>> fa0809f (first and second task)
+U mnie ctrl-shift-f10.
+
+
